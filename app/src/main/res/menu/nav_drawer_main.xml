@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+
+        <!--TODO: 'action' prefix is not appropriate -->
+        <item
+            android:id="@+id/action_activeIdeas"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="@string/title_activeIdeas"
+            app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/action_archivedIdeas"
+            android:icon="@drawable/ic_archive_white_24dp"
+            android:title="@string/title_archivedIdeas"
+            app:showAsAction="ifRoom"/>
+    </group>
+</menu>

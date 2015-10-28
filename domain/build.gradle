@@ -1,0 +1,19 @@
+apply plugin: 'java'
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = JavaVersion.VERSION_1_7
+//noinspection GroovyUnusedAssignment
+targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+
+    compile 'io.reactivex:rxjava:1.0.14'
+
+    // Test
+    // Junit
+    testCompile 'junit:junit:4.12'
+    // Mockito
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    // Hamcrest Library
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+}
