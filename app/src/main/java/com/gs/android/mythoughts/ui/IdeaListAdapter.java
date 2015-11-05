@@ -9,16 +9,13 @@ import com.gs.android.mythoughts.domain.Idea;
 import com.gs.android.mythoughts.domain.Ideas;
 import com.gs.android.mythoughts.domain.WithId;
 import com.gs.android.mythoughts.domain.interactor.IdeaSource;
+import com.gs.android.mythoughts.ui.util.SubscriberPool;
 import com.gs.android.mythoughts.ui.util.ViewFactory;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import rx.Subscriber;
-import rx.functions.Action1;
-import rx.observers.Subscribers;
-import timber.log.Timber;
 
 // TODO: IDs of type long are not generic.
 // TODO: Receiving a potentially infinite list of IDs.

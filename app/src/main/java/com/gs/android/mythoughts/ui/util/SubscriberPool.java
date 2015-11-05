@@ -1,9 +1,8 @@
-package com.gs.android.mythoughts.ui;
+package com.gs.android.mythoughts.ui.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
 import rx.observers.Subscribers;
