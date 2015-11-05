@@ -1,14 +1,14 @@
-package com.gs.android.mythoughts.db;
+package com.gs.android.data.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 
-import com.gs.android.mythoughts.db.IdeasContract.IdeaEntry;
+import com.gs.android.data.db.IdeasContract.IdeaEntry;
 import com.gs.android.mythoughts.domain.Idea;
 import com.gs.android.mythoughts.domain.WithId;
 
-import static com.gs.android.mythoughts.db.IdeasContract.IdeaEntry.COL_ID;
+import static com.gs.android.data.db.IdeasContract.IdeaEntry.COL_ID;
 
 public final class IdeaSqlConverter {
 

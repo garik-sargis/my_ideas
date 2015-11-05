@@ -1,11 +1,10 @@
-package com.gs.android.mythoughts.db;
+package com.gs.android.data.db;
 
 import android.content.Context;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gs.android.mythoughts.db.IdeasContract.IdeaEntry;
+import com.gs.android.data.db.IdeasContract.IdeaEntry;
 
 public class DbHelper extends SQLiteOpenHelper{
 

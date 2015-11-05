@@ -1,4 +1,4 @@
-package com.gs.android.mythoughts.db.mock;
+package com.gs.android.data.db.mock;
 
 import com.gs.android.mythoughts.domain.Idea;
 import com.gs.android.mythoughts.domain.WithId;

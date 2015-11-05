@@ -16,13 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gs.android.mythoughts.R;
-import com.gs.android.mythoughts.db.mock.MockIdeaRepo;
+import com.gs.android.data.db.mock.MockIdeaRepo;
 import com.gs.android.mythoughts.domain.Idea;
 import com.gs.android.mythoughts.domain.interactor.Connector;
 import com.gs.android.mythoughts.domain.interactor.IdeaCreator;
 import com.gs.android.mythoughts.domain.interactor.IdeaListSource;
 import com.gs.android.mythoughts.domain.interactor.IdeaSource;
-import com.gs.android.mythoughts.ui.util.DividerDecoration;
 import com.gs.android.mythoughts.ui.util.InflatingViewFactory;
 import com.gs.android.mythoughts.ui.util.ViewFactory;
 

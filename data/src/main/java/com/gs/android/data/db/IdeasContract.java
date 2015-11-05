@@ -1,4 +1,4 @@
-package com.gs.android.mythoughts.db;
+package com.gs.android.data.db;
 
 import android.provider.BaseColumns;
 
