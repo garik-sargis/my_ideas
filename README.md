@@ -16,7 +16,7 @@ My Ideas
 * Support Annotations
 * RxJava
 * RxAndroid
-* Dagger 2 (not used yet
+* Dagger 2 (not used yet)
 * Timber
 
 ### App Module
@@ -24,6 +24,6 @@ My Ideas
 * Android Support Libraries
 * RxJava
 * RxAndroid
-* Dagger 2 (not used yet
+* Dagger 2 (not used yet)
 * Butterknife
 * Timber
