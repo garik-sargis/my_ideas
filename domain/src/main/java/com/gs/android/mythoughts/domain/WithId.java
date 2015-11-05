@@ -15,7 +15,7 @@ public class WithId<T> {
         return mId;
     }
 
-    public T data() {
+    public T content() {
         return mData;
     }
 

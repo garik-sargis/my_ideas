@@ -4,67 +4,31 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.gs.android.mythoughts.R;
 import com.gs.android.mythoughts.domain.Idea;
+import com.gs.android.mythoughts.domain.Ideas;
 import com.gs.android.mythoughts.domain.WithId;
 import com.gs.android.mythoughts.domain.interactor.IdeaSource;
 import com.gs.android.mythoughts.ui.util.ViewFactory;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.functions.Action1;
 import rx.observers.Subscribers;
 import timber.log.Timber;
 
-public class IdeaListAdapter extends RecyclerView.Adapter<IdeaListAdapter.ViewHolder> {
+// TODO: IDs of type long are not generic.
+// TODO: Receiving a potentially infinite list of IDs.
+// TODO: Consider the case when the data associated with a signle item comes from multiple sources.
+public class IdeaListAdapter extends RecyclerView.Adapter<IdeaViewHolder> implements SubscriberPool.Listener<IdeaViewHolder,WithId<Idea>> {
 
-    public interface OnClickListener {
-        void onClick(long id);
-    }
+    // TODO: Refactor default/error data
 
-    protected static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mvText;
-
-        private Subscriber<WithId<Idea>> mSubscriber;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            mvText = ButterKnife.findById(itemView, android.R.id.text1);
-        }
-
-        private void bind(Idea data) {
-            mvText.setText(data.text());
-        }
-
-        public Subscriber<WithId<Idea>> swapSubscriber() {
-            unsubscribe();
-
-            mSubscriber = Subscribers.create(new Action1<WithId<Idea>>() {
-                @Override public void call(final WithId<Idea> ideaWithId) {
-                    ViewHolder.this.bind(ideaWithId.data());
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(final Throwable e) {
-                    Timber.d("onError()");
-                    e.printStackTrace();
-                }
-            });
-
-            return mSubscriber;
-        }
-
-        public void unsubscribe() {
-            if (mSubscriber != null) {
-                mSubscriber.unsubscribe();
-            }
-        }
-    }
+    private static final Idea DEFAULT_DATA = Ideas.with("Loading...");
+    private static final Idea ERROR_DATA = Ideas.with("ERROR!!!");
 
     public static IdeaListAdapter create(final ViewFactory itemViewFactory,
                                          final IdeaSource ideaSource) {
@@ -77,12 +41,16 @@ public class IdeaListAdapter extends RecyclerView.Adapter<IdeaListAdapter.ViewHo
 
     private List<Long> mIds;
 
-    public IdeaListAdapter(final ViewFactory itemViewFactory,
-                           final IdeaSource ideaSource,
+    private final SubscriberPool<IdeaViewHolder, WithId<Idea>> mSubscriberPool;
+
+    public IdeaListAdapter(@NonNull final ViewFactory itemViewFactory,
+                           @NonNull final IdeaSource ideaSource,
                            @NonNull final List<Long> ids) {
         mItemViewFactory = itemViewFactory;
         mIdeaSource = ideaSource;
         mIds = ids;
+
+        mSubscriberPool = SubscriberPool.create(this);
 
         setHasStableIds(true);
     }
@@ -98,24 +66,37 @@ public class IdeaListAdapter extends RecyclerView.Adapter<IdeaListAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public IdeaViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View itemView = mItemViewFactory.create(parent);
-        return new ViewHolder(itemView);
+        return new IdeaViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final IdeaViewHolder holder, final int position) {
         final long id = getItemId(position);
-        mIdeaSource.getIdea(holder.swapSubscriber(), id);
+
+        // Use default data before real data arrives
+        holder.setData(DEFAULT_DATA);
+
+        // Get a new subscriber from the pool
+        Subscriber<WithId<Idea>> subscriber = mSubscriberPool.get(holder);
+
+        // Subscribe to get the data associated with the ID
+        mIdeaSource.getIdea(subscriber, id);
     }
 
     @Override
-    public void onViewRecycled(final ViewHolder holder) {
-        holder.unsubscribe();
+    public void onViewRecycled(final IdeaViewHolder holder) {
+        // Unsubscribe the old subscriber
+        mSubscriberPool.unsubscribe(holder);
     }
 
     @Override
     public int getItemCount() {
         return mIds.size();
+    }
+
+    @Override public void onDataReceived(final IdeaViewHolder holder, final WithId<Idea> data) {
+        holder.setData(data.content());
     }
 }

@@ -17,7 +17,7 @@ public class WithIdTest {
         Object mockObj = mock(Object.class);
         WithId<Object> withId = new WithId<>(id, mockObj);
         assertThat(withId.id(), equalTo(id));
-        assertThat(withId.data(), sameInstance(mockObj));
+        assertThat(withId.content(), sameInstance(mockObj));
     }
 
     @Ignore

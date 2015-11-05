@@ -15,8 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.gs.android.mythoughts.R;
 import com.gs.android.data.db.mock.MockIdeaRepo;
+import com.gs.android.mythoughts.R;
 import com.gs.android.mythoughts.domain.Idea;
 import com.gs.android.mythoughts.domain.interactor.Connector;
 import com.gs.android.mythoughts.domain.interactor.IdeaCreator;
@@ -68,15 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
         mvIdeaList.setHasFixedSize(true);
 
-//        LayoutManager layoutManager = new StaggeredGridLayoutManager(2,
-//                StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,
                 false);
 
         mvIdeaList.setLayoutManager(layoutManager);
-        final float margin = getResources().getDimension(R.dimen.card_grid_margin);
-//        mvIdeaList.addItemDecoration(new DividerDecoration(this, DividerDecoration.VERTICAL_LIST));
 
         // Dependencies
         MockIdeaRepo mockIdeaRepo = new MockIdeaRepo();

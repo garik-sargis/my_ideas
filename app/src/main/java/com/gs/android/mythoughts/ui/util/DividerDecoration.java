@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+// TODO: Investigate the implementation and refactor if necessary
 public class DividerDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyThoughts</string>
+    <string name="app_name">MyIdeas</string>
 
     <string name="action_generateIdea">Generate Idea</string>
     <string name="title_activeIdeas">Ideas</string>
