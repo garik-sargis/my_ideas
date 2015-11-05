@@ -22,7 +22,7 @@ import com.gs.android.mythoughts.domain.interactor.Connector;
 import com.gs.android.mythoughts.domain.interactor.IdeaCreator;
 import com.gs.android.mythoughts.domain.interactor.IdeaListSource;
 import com.gs.android.mythoughts.domain.interactor.IdeaSource;
-import com.gs.android.mythoughts.ui.util.InflatingViewFactory;
+import com.gs.android.mythoughts.ui.util.ViewFactories;
 import com.gs.android.mythoughts.ui.util.ViewFactory;
 
 import net._01001111.text.LoremIpsum;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         // Adapter
-        ViewFactory viewFactory = new InflatingViewFactory(getLayoutInflater(),
+        ViewFactory viewFactory = ViewFactories.inflating(getLayoutInflater(),
                 R.layout.item_idea_list);
         mAdapter = IdeaListAdapter.create(viewFactory, ideaSource);
         mvIdeaList.setAdapter(mAdapter);
