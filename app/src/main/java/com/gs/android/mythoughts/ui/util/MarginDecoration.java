@@ -4,10 +4,15 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class MarginItemDecoration extends RecyclerView.ItemDecoration {
+public class MarginDecoration extends RecyclerView.ItemDecoration {
 
-    public static MarginItemDecoration create(final float margin) {
-        return new MarginItemDecoration(margin, margin, margin, margin);
+    public static MarginDecoration create(final float left, final float top,
+                                          final float right, final float bottom) {
+        return new MarginDecoration(left, top, right, bottom);
+    }
+
+    public static MarginDecoration create(final float margin) {
+        return new MarginDecoration(margin, margin, margin, margin);
     }
 
     private final float mMarginLeft;
@@ -15,7 +20,7 @@ public class MarginItemDecoration extends RecyclerView.ItemDecoration {
     private final float mMarginRight;
     private final float mMarginBottom;
 
-    public MarginItemDecoration(final float marginLeft, final float marginTop, final float marginRight, final float marginBottom) {
+    public MarginDecoration(final float marginLeft, final float marginTop, final float marginRight, final float marginBottom) {
         mMarginLeft = marginLeft;
         mMarginTop = marginTop;
         mMarginRight = marginRight;

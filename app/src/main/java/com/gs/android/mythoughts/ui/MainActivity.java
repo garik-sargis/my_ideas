@@ -8,9 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +19,11 @@ import com.gs.android.mythoughts.R;
 import com.gs.android.mythoughts.db.mock.MockIdeaRepo;
 import com.gs.android.mythoughts.domain.Idea;
 import com.gs.android.mythoughts.domain.interactor.Connector;
-import com.gs.android.mythoughts.domain.interactor.IdeaListSource;
 import com.gs.android.mythoughts.domain.interactor.IdeaCreator;
+import com.gs.android.mythoughts.domain.interactor.IdeaListSource;
 import com.gs.android.mythoughts.domain.interactor.IdeaSource;
+import com.gs.android.mythoughts.ui.util.DividerDecoration;
 import com.gs.android.mythoughts.ui.util.InflatingViewFactory;
-import com.gs.android.mythoughts.ui.util.MarginItemDecoration;
 import com.gs.android.mythoughts.ui.util.ViewFactory;
 
 import net._01001111.text.LoremIpsum;
@@ -70,12 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
         mvIdeaList.setHasFixedSize(true);
 
-        LayoutManager layoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
+//        LayoutManager layoutManager = new StaggeredGridLayoutManager(2,
+//                StaggeredGridLayoutManager.VERTICAL);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL,
+                false);
 
         mvIdeaList.setLayoutManager(layoutManager);
         final float margin = getResources().getDimension(R.dimen.card_grid_margin);
-//        mvIdeaList.addItemDecoration(MarginItemDecoration.create(margin));
+//        mvIdeaList.addItemDecoration(new DividerDecoration(this, DividerDecoration.VERTICAL_LIST));
 
         // Dependencies
         MockIdeaRepo mockIdeaRepo = new MockIdeaRepo();
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Adapter
         ViewFactory viewFactory = new InflatingViewFactory(getLayoutInflater(),
-                android.R.layout.simple_list_item_1);
+                R.layout.item_idea_list);
         mAdapter = IdeaListAdapter.create(viewFactory, ideaSource);
         mvIdeaList.setAdapter(mAdapter);
 
