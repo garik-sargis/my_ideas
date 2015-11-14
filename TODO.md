@@ -1,3 +1,3 @@
 TODO
 ===================
-* Change the app package name.
+Empty
