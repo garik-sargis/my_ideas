@@ -15,10 +15,11 @@ import java.util.List;
 
 import rx.Subscriber;
 
+// TODO: Decompose into reusable parts
 // TODO: Use staggered view with fixed-size items
 // TODO: IDs of type long are not generic.
 // TODO: Receiving a potentially infinite list of IDs.
-// TODO: Consider the case when the data associated with a signle item comes from multiple sources.
+// TODO: Consider the case when the data associated with a single item comes from multiple sources.
 public class IdeaListAdapter extends RecyclerView.Adapter<IdeaViewHolder> implements SubscriberPool.Listener<IdeaViewHolder,WithId<Idea>> {
 
     // TODO: Refactor default/error data

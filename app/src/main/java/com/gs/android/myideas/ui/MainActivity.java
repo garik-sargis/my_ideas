@@ -100,9 +100,8 @@ public final class MainActivity extends AppCompatActivity {
         setSupportActionBar(mvAppBar);
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
+        //noinspection ConstantConditions
+        actionBar.setDisplayShowTitleEnabled(false);
 
         // TODO: Replace placeholder string resources
         mDrawerToggle = new ActionBarDrawerToggle(this,
