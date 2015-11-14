@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gs.android.mythoughts" >
+    package="com.gs.android.myideas" >
 
     <application
         android:name=".App"

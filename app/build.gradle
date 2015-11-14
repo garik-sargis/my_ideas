@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+// TODO: Consider having an 'internal' build flavor.
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.gs.android.mythoughts"
+        applicationId "com.gs.android.myideas"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -15,6 +17,7 @@ android {
     buildTypes {
         debug {
             debuggable true
+            applicationIdSuffix '.debug'
         }
         release {
             minifyEnabled false
