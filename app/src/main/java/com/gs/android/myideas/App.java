@@ -20,6 +20,7 @@ public class App extends Application {
     @Override public void onCreate() {
         super.onCreate();
 
+        // TODO: Plant only in debug build-type
         Timber.plant(new ThreadDebugTree());
 
         mComponent = DaggerAppComponent.builder()

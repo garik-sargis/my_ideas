@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.gs.android.myideas.App;
 import com.gs.android.myideas.R;
@@ -34,26 +33,27 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.functions.Action1;
 import rx.observers.Subscribers;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.list_ideas) RecyclerView mvIdeaList;
+    @Bind(R.id.list_ideas) protected RecyclerView mvIdeaList;
 
-    @Bind(R.id.action_generateIdea) FloatingActionButton mvGenerateIdeaButton;
+    @Bind(R.id.action_generateIdea) protected FloatingActionButton mvGenerateIdeaButton;
 
-    @Bind(R.id.appBar) Toolbar mvAppBar;
+    @Bind(R.id.appBar) protected Toolbar mvAppBar;
 
-    @Bind(R.id.drawer) DrawerLayout mvDrawer;
+    @Bind(R.id.drawer) protected DrawerLayout mvDrawer;
 
 
-    @Inject IdeaCreator mIdeaCreator;
+    @Inject protected IdeaCreator mIdeaCreator;
 
-    @Inject IdeaSource mIdeaSource;
+    @Inject protected IdeaSource mIdeaSource;
 
-    @Inject IdeaListSource mIdeaListSource;
+    @Inject protected IdeaListSource mIdeaListSource;
 
     public ActionBarDrawerToggle mDrawerToggle;
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Content view init.
         setContentView(R.layout.activity_main);
-        // View reference injection
+        // View binding
         ButterKnife.bind(this);
 
         initNavigation();
@@ -91,13 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.swapIds(ids);
             }
         }));
-
-        // FAB
-        mvGenerateIdeaButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(final View v) {
-                generateIdea();
-            }
-        });
     }
 
     // TODO: Remove
@@ -123,10 +116,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO: Replace with a proper functionality
+
     /**
-     * Generates a random idea
+     * Generates a random idea when the FAB is clicked
      */
-    private void generateIdea() {
+    @OnClick(R.id.action_generateIdea)
+    protected void generateIdea() {
         Timber.d("FAB clicked");
         final String text = mLoremIpsum.sentence();
         final Idea idea = new Idea(text);
