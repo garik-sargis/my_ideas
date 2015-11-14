@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,13 +16,13 @@ import android.view.View;
 
 import com.gs.android.myideas.App;
 import com.gs.android.myideas.R;
-import com.gs.android.myideas.dagger.components.AppComponent;
 import com.gs.android.myideas.dagger.components.DaggerMainActivityComponent;
 import com.gs.android.myideas.dagger.components.MainActivityComponent;
 import com.gs.android.myideas.domain.Idea;
 import com.gs.android.myideas.domain.interactor.IdeaCreator;
 import com.gs.android.myideas.domain.interactor.IdeaListSource;
 import com.gs.android.myideas.domain.interactor.IdeaSource;
+import com.gs.android.myideas.ui.util.LayoutManagers;
 import com.gs.android.myideas.ui.util.ViewFactories;
 import com.gs.android.myideas.ui.util.ViewFactory;
 
@@ -49,15 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.drawer) DrawerLayout mvDrawer;
 
-    public ActionBarDrawerToggle mDrawerToggle;
-
-    private IdeaListAdapter mAdapter;
 
     @Inject IdeaCreator mIdeaCreator;
 
     @Inject IdeaSource mIdeaSource;
 
     @Inject IdeaListSource mIdeaListSource;
+
+    public ActionBarDrawerToggle mDrawerToggle;
+
+    private IdeaListAdapter mAdapter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -76,13 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
         initNavigation();
 
+        // Adapter
+        ViewFactory viewFactory = ViewFactories.inflating(getLayoutInflater(),
+                R.layout.item_idea_list);
+        mAdapter = IdeaListAdapter.create(viewFactory, mIdeaSource);
+
+        // Idea List (RecyclerView)
         mvIdeaList.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL,
-                false);
-
-        mvIdeaList.setLayoutManager(layoutManager);
+        mvIdeaList.setLayoutManager(LayoutManagers.linear(this));
+        mvIdeaList.setAdapter(mAdapter);
 
         mIdeaListSource.get(Subscribers.create(new Action1<List<Long>>() {
             @Override public void call(final List<Long> ids) {
@@ -90,25 +92,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        // Adapter
-        ViewFactory viewFactory = ViewFactories.inflating(getLayoutInflater(),
-                R.layout.item_idea_list);
-        mAdapter = IdeaListAdapter.create(viewFactory, mIdeaSource);
-        mvIdeaList.setAdapter(mAdapter);
-
         // FAB
         mvGenerateIdeaButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(final View v) {
-                Timber.d("FAB clicked");
-                final String text = mLoremIpsum.sentence();
-                final Idea idea = new Idea(text);
-                mIdeaCreator.create(
-                        Subscribers.create(new Action1<Boolean>() {
-                            @Override public void call(final Boolean result) {
-                                Timber.d("Insert result: %b", result);
-                            }
-                        }),
-                        idea);
+                generateIdea();
             }
         });
     }
@@ -118,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNavigation() {
         setSupportActionBar(mvAppBar);
-
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -136,7 +122,25 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    @Override public void onConfigurationChanged(final Configuration newConfig) {
+    // TODO: Replace with a proper functionality
+    /**
+     * Generates a random idea
+     */
+    private void generateIdea() {
+        Timber.d("FAB clicked");
+        final String text = mLoremIpsum.sentence();
+        final Idea idea = new Idea(text);
+        mIdeaCreator.create(
+                Subscribers.create(new Action1<Boolean>() {
+                    @Override public void call(final Boolean result) {
+                        Timber.d("Insert result: %b", result);
+                    }
+                }),
+                idea);
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         mDrawerToggle.onConfigurationChanged(newConfig);
@@ -159,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-
         switch (item.getItemId()) {
             case android.support.v7.appcompat.R.id.home:
                 return mDrawerToggle.onOptionsItemSelected(item);
