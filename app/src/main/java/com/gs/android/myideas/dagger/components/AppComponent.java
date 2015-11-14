@@ -5,6 +5,7 @@ import com.gs.android.myideas.dagger.modules.DataModule;
 import com.gs.android.myideas.dagger.modules.ExecutionModule;
 import com.gs.android.myideas.dagger.modules.DomainModule;
 import com.gs.android.myideas.domain.interactor.IdeaCreator;
+import com.gs.android.myideas.domain.interactor.IdeaListSource;
 import com.gs.android.myideas.domain.interactor.IdeaSource;
 
 import javax.inject.Singleton;
@@ -16,7 +17,7 @@ import dagger.Component;
 public interface AppComponent {
     IdeaSource ideaSource();
 
-    com.gs.android.myideas.domain.interactor.IdeaListSource ideaListSource();
+    IdeaListSource ideaListSource();
 
     IdeaCreator ideaCreator();
 }

@@ -15,18 +15,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.gs.android.myideas.R;
-import com.gs.android.myideas.ui.util.ViewFactory;
 import com.gs.android.myideas.App;
+import com.gs.android.myideas.R;
 import com.gs.android.myideas.dagger.components.AppComponent;
+import com.gs.android.myideas.dagger.components.DaggerMainActivityComponent;
+import com.gs.android.myideas.dagger.components.MainActivityComponent;
 import com.gs.android.myideas.domain.Idea;
 import com.gs.android.myideas.domain.interactor.IdeaCreator;
+import com.gs.android.myideas.domain.interactor.IdeaListSource;
 import com.gs.android.myideas.domain.interactor.IdeaSource;
 import com.gs.android.myideas.ui.util.ViewFactories;
+import com.gs.android.myideas.ui.util.ViewFactory;
 
 import net._01001111.text.LoremIpsum;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,14 +53,25 @@ public class MainActivity extends AppCompatActivity {
 
     private IdeaListAdapter mAdapter;
 
-    private IdeaCreator mIdeaCreator;
+    @Inject IdeaCreator mIdeaCreator;
+
+    @Inject IdeaSource mIdeaSource;
+
+    @Inject IdeaListSource mIdeaListSource;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        // Dependency injection
+        MainActivityComponent component = DaggerMainActivityComponent.builder()
+                .appComponent(App.fromContext(this).component())
+                .build();
+        component.inject(this);
 
+        // Content view init.
+        setContentView(R.layout.activity_main);
+        // View reference injection
         ButterKnife.bind(this);
 
         initNavigation();
@@ -68,12 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         mvIdeaList.setLayoutManager(layoutManager);
 
-
-        final AppComponent appComponent = App.fromContext(this).component();
-        IdeaSource ideaSource = appComponent.ideaSource();
-
-        com.gs.android.myideas.domain.interactor.IdeaListSource ideaListSource = appComponent.ideaListSource();
-        ideaListSource.get(Subscribers.create(new Action1<List<Long>>() {
+        mIdeaListSource.get(Subscribers.create(new Action1<List<Long>>() {
             @Override public void call(final List<Long> ids) {
                 mAdapter.swapIds(ids);
             }
@@ -82,12 +93,10 @@ public class MainActivity extends AppCompatActivity {
         // Adapter
         ViewFactory viewFactory = ViewFactories.inflating(getLayoutInflater(),
                 R.layout.item_idea_list);
-        mAdapter = IdeaListAdapter.create(viewFactory, ideaSource);
+        mAdapter = IdeaListAdapter.create(viewFactory, mIdeaSource);
         mvIdeaList.setAdapter(mAdapter);
 
         // FAB
-        mIdeaCreator = appComponent.ideaCreator();
-
         mvGenerateIdeaButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(final View v) {
                 Timber.d("FAB clicked");

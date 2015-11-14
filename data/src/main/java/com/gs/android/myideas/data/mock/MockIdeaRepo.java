@@ -54,12 +54,6 @@ public class MockIdeaRepo implements IdeaRepo {
     public Observable<WithId<Idea>> query(final long id) {
         return Observable.create(new Observable.OnSubscribe<WithId<Idea>>() {
             @Override public void call(final Subscriber<? super WithId<Idea>> sub) {
-                // TODO: Remove sleep
-                try {
-                    Thread.sleep(300L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 Idea idea = mMap.get(id);
                 WithId<Idea> ideaWithId = new WithId<>(id, idea);
                 sub.onNext(ideaWithId);
