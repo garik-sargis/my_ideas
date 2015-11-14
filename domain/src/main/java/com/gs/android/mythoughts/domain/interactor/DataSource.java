@@ -6,6 +6,6 @@ import rx.Subscriber;
 
 public interface DataSource<T> {
 
-    void getIdea(Subscriber<WithId<T>> subscriber, long id);
+    void subscribe(Subscriber<WithId<T>> subscriber, long id);
 
 }

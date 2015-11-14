@@ -17,7 +17,7 @@ public class IdeaSource implements DataSource<Idea> {
         mConnector = connector;
     }
 
-    public void getIdea(Subscriber<WithId<Idea>> subscriber, long id) {
+    public void subscribe(Subscriber<WithId<Idea>> subscriber, long id) {
         Observable<WithId<Idea>> observable = mRepo.query(id);
         mConnector.connect(observable, subscriber);
     }

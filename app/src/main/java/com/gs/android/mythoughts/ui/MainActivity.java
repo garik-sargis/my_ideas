@@ -15,10 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.gs.android.data.db.mock.MockIdeaRepo;
+import com.gs.android.mythoughts.App;
 import com.gs.android.mythoughts.R;
+import com.gs.android.mythoughts.dagger.components.AppComponent;
 import com.gs.android.mythoughts.domain.Idea;
-import com.gs.android.mythoughts.domain.interactor.Connector;
 import com.gs.android.mythoughts.domain.interactor.IdeaCreator;
 import com.gs.android.mythoughts.domain.interactor.IdeaListSource;
 import com.gs.android.mythoughts.domain.interactor.IdeaSource;
@@ -28,16 +28,11 @@ import com.gs.android.mythoughts.ui.util.ViewFactory;
 import net._01001111.text.LoremIpsum;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.observers.Subscribers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,14 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
         mvIdeaList.setLayoutManager(layoutManager);
 
-        // Dependencies
-        MockIdeaRepo mockIdeaRepo = new MockIdeaRepo();
-        ExecutorService ioExecutor = Executors.newSingleThreadExecutor();
-        Scheduler ioScheduler = Schedulers.from(ioExecutor);
-        Connector connector = new Connector(ioScheduler, AndroidSchedulers.mainThread());
-        IdeaSource ideaSource = new IdeaSource(mockIdeaRepo, connector);
 
-        IdeaListSource ideaListSource = new IdeaListSource(mockIdeaRepo, connector);
+        final AppComponent appComponent = App.fromContext(this).component();
+        IdeaSource ideaSource = appComponent.ideaSource();
+
+        IdeaListSource ideaListSource = appComponent.ideaListSource();
         ideaListSource.get(Subscribers.create(new Action1<List<Long>>() {
             @Override public void call(final List<Long> ids) {
                 mAdapter.swapIds(ids);
@@ -95,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         mvIdeaList.setAdapter(mAdapter);
 
         // FAB
-        mIdeaCreator = new IdeaCreator(mockIdeaRepo, connector);
+        mIdeaCreator = appComponent.ideaCreator();
 
         mvGenerateIdeaButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(final View v) {

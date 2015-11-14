@@ -6,6 +6,7 @@ import com.gs.android.mythoughts.domain.repo.IdeaRepo;
 import rx.Observable;
 import rx.Subscriber;
 
+// TODO: Rename (e.g. IdeaSink)
 public class IdeaCreator {
     private final IdeaRepo mRepo;
 

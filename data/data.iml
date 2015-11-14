@@ -100,8 +100,8 @@
     <orderEntry type="library" exported="" name="preference-v14-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="timber-4.0.1" level="project" />
-    <orderEntry type="library" exported="" name="dagger-2.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="dagger-2.0" level="project" />
     <orderEntry type="module" module-name="domain" exported="" />
   </component>
 </module>

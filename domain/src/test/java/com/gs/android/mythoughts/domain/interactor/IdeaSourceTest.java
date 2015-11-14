@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import rx.Subscriber;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class IdeaSourceTest {
@@ -31,6 +29,6 @@ public class IdeaSourceTest {
         IdeaSource ideaSource = new IdeaSource(mockIdeaRepo, mockConnector);
         Subscriber mockSubscriber = mock(Subscriber.class);
 
-        ideaSource.getIdea(mockSubscriber, id);
+        ideaSource.subscribe(mockSubscriber, id);
     }
 }

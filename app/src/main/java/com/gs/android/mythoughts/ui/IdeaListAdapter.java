@@ -17,6 +17,7 @@ import java.util.List;
 
 import rx.Subscriber;
 
+// TODO: Use staggered view with fixed-size items
 // TODO: IDs of type long are not generic.
 // TODO: Receiving a potentially infinite list of IDs.
 // TODO: Consider the case when the data associated with a signle item comes from multiple sources.
@@ -79,7 +80,7 @@ public class IdeaListAdapter extends RecyclerView.Adapter<IdeaViewHolder> implem
         Subscriber<WithId<Idea>> subscriber = mSubscriberPool.get(holder);
 
         // Subscribe to get the data associated with the ID
-        mIdeaSource.getIdea(subscriber, id);
+        mIdeaSource.subscribe(subscriber, id);
     }
 
     @Override

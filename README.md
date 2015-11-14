@@ -24,6 +24,6 @@ My Ideas
 * Android Support Libraries
 * RxJava
 * RxAndroid
-* Dagger 2 (not used yet)
+* Dagger 2
 * Butterknife
 * Timber
