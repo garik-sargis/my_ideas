@@ -5,25 +5,24 @@ My Ideas
 
 ### Domain Module
 
-* RxJava
-* JUnit
-* Mockito
-* Hamcrest Matchers
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [JUnit](http://junit.org/)
+* [Mockito](http://mockito.org/)
+* [Hamcrest Matchers](https://github.com/hamcrest/JavaHamcrest)
 
 ### Data Module
 
 * Support Preferences
 * Support Annotations
-* RxJava
-* RxAndroid
-* Dagger 2 (not used yet)
-* Timber
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+* [Timber](https://github.com/JakeWharton/timber)
 
 ### App Module
 
 * Android Support Libraries
-* RxJava
-* RxAndroid
-* Dagger 2
-* Butterknife
-* Timber
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+* [Dagger 2](http://google.github.io/dagger/)
+* [Butter Knife](http://jakewharton.github.io/butterknife/)
+* [Timber](https://github.com/JakeWharton/timber)
