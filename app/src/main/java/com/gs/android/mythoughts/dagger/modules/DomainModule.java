@@ -1,7 +1,8 @@
 package com.gs.android.mythoughts.dagger.modules;
 
-import com.gs.android.mythoughts.dagger.qualifiers.IoScheduler;
-import com.gs.android.mythoughts.dagger.qualifiers.UiScheduler;
+import com.gs.android.mythoughts.dagger.Qualifiers;
+import com.gs.android.mythoughts.dagger.Qualifiers.IoScheduler;
+import com.gs.android.mythoughts.dagger.Qualifiers.UiScheduler;
 import com.gs.android.mythoughts.domain.interactor.Connector;
 import com.gs.android.mythoughts.domain.interactor.IdeaCreator;
 import com.gs.android.mythoughts.domain.interactor.IdeaListSource;
